@@ -18,4 +18,10 @@ public class MainActivity extends AppCompatActivity {
                 Record.class);
         startActivity(settingsIntent);
     }
+
+    public void onBack(View view) {
+        Intent settingsIntent = new Intent( this,
+                                            ListRecord.class);
+        startActivity(settingsIntent);
+    }
 }

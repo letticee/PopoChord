@@ -12,6 +12,7 @@ import android.view.View;
 import java.io.File;
 import android.os.Environment;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class Record extends AppCompatActivity {
 
@@ -47,12 +48,12 @@ public class Record extends AppCompatActivity {
                 } else {
                     // Permission has already been granted
                     //設定錄音檔名
-                    String fileName = "record.amr";
+                    String fileName = Calendar.getInstance().getTime().toString();
                     try {
                         File SDCardpath = Environment.getExternalStorageDirectory();
-                        File myDataPath = new File( SDCardpath.getAbsolutePath() + "/download" );
+                        File myDataPath = new File( SDCardpath.getAbsolutePath() + "/popochord_record" );
                         if( !myDataPath.exists() ) myDataPath.mkdirs();
-                        File recodeFile = new File(SDCardpath.getAbsolutePath() + "/download/"+fileName);
+                        File recodeFile = new File(SDCardpath.getAbsolutePath() + "/popochord_record/"+fileName);
 
                         mediaRecorder = new MediaRecorder();
 
@@ -94,4 +95,5 @@ public class Record extends AppCompatActivity {
         });
 
     }
+
 }
