@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.view.View;
 import java.io.File;
 import android.os.Environment;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -18,9 +22,21 @@ public class Record extends AppCompatActivity {
 
     private Button recordButn;
     private Button stopButn;
+    private EditText fnameText;
+    private TextView stattextView;
     private MediaRecorder mediaRecorder = null;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
     private static final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 2;
+
+    String formatCalendar(Calendar calendar){
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // 1月的值為0
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY); // HOUR_OF_DAY是24小時制，HOUR是12小時制
+        int minute = calendar.get(Calendar.MINUTE);
+        //int second = calendar.get(Calendar.SECOND);
+        return String.format("%d-%02d-%02d %02d:%02d", year, month, day, hour, minute);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +45,12 @@ public class Record extends AppCompatActivity {
 
         recordButn = (Button) findViewById(R.id.recordButton);
         stopButn = (Button) findViewById(R.id.stopButton);
+        fnameText = (EditText) findViewById(R.id.fileNameEditText);
+        fnameText = (EditText) findViewById(R.id.fileNameEditText);
+        stattextView = (TextView) findViewById(R.id.statusTextView);
+
+        fnameText.setText(formatCalendar(Calendar.getInstance()));
+        stopButn.setEnabled(false);
 
         //錄音
         recordButn.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +70,9 @@ public class Record extends AppCompatActivity {
                 } else {
                     // Permission has already been granted
                     //設定錄音檔名
-                    String fileName = Calendar.getInstance().getTime().toString();
+                    //String fileName = Calendar.getInstance().getTime().toString();
+                    String fileName = fnameText.getText().toString();
+
                     try {
                         File SDCardpath = Environment.getExternalStorageDirectory();
                         File myDataPath = new File( SDCardpath.getAbsolutePath() + "/popochord_record" );
@@ -74,7 +98,10 @@ public class Record extends AppCompatActivity {
                         //開始錄音
                         mediaRecorder.start();
 
-                        recordButn.setClickable(false);
+                        recordButn.setEnabled(false);
+                        stopButn.setEnabled(true);
+                        fnameText.setEnabled(false);
+                        stattextView.setText("recording...");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -89,7 +116,12 @@ public class Record extends AppCompatActivity {
                     mediaRecorder.stop();
                     mediaRecorder.release();
                     mediaRecorder = null;
-                    recordButn.setClickable(true);
+                    recordButn.setEnabled(true);
+                    fnameText.setEnabled(true);
+                    stattextView.setText("");
+                    Toast toast = Toast.makeText(Record.this, fnameText.getText().toString()+".amr saved", Toast.LENGTH_SHORT);
+                    toast.show();
+
                 }
             }
         });
