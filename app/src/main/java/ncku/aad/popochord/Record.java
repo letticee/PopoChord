@@ -1,31 +1,54 @@
 package ncku.aad.popochord;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.media.MediaRecorder;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View;
 import java.io.File;
 import android.os.Environment;
+import android.widget.Toolbar;
+
 import java.io.IOException;
 import java.util.Calendar;
 
 public class Record extends AppCompatActivity {
 
+    private String fileName;
+
     private Button recordButn;
     private Button stopButn;
     private MediaRecorder mediaRecorder = null;
+    private Toolbar toolbar;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
     private static final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 2;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.parent:
+                Intent intent = new Intent(this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("showFile", fileName);
+                intent.putExtras(bundle);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recordButn = (Button) findViewById(R.id.recordButton);
         stopButn = (Button) findViewById(R.id.stopButton);
@@ -48,7 +71,7 @@ public class Record extends AppCompatActivity {
                 } else {
                     // Permission has already been granted
                     //設定錄音檔名
-                    String fileName = Calendar.getInstance().getTime().toString();
+                    fileName = Calendar.getInstance().getTime().toString();
                     try {
                         File SDCardpath = Environment.getExternalStorageDirectory();
                         File myDataPath = new File( SDCardpath.getAbsolutePath() + "/popochord_record" );

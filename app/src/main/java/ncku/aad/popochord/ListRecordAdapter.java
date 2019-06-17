@@ -1,6 +1,8 @@
 package ncku.aad.popochord;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ public class ListRecordAdapter extends RecyclerView.Adapter<ListRecordAdapter.My
     private LinkedList<String> mWordList;
     private LayoutInflater mInflater;
 
+    private String SelectedFileName = null;
 
     public class MyViewHolder extends RecyclerView.ViewHolder
                                         implements View.OnClickListener{
@@ -30,11 +33,10 @@ public class ListRecordAdapter extends RecyclerView.Adapter<ListRecordAdapter.My
         @Override
         public void onClick(View v) {
             int mPosition = getLayoutPosition();
-            String element = mWordList.get(mPosition);
+
 
             // TODO: file choosed action
-            mWordList.set(mPosition, "Clicked! " + element);
-            //
+            SelectedFileName = mWordList.get(mPosition);
             mListRecordAdapter.notifyDataSetChanged();
         }
     }
@@ -61,4 +63,5 @@ public class ListRecordAdapter extends RecyclerView.Adapter<ListRecordAdapter.My
     public int getItemCount() {
         return mWordList.size();
     }
+
 }
