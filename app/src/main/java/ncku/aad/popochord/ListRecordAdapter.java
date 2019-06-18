@@ -13,10 +13,17 @@ import android.widget.TextView;
 import java.util.LinkedList;
 
 public class ListRecordAdapter extends RecyclerView.Adapter<ListRecordAdapter.MyViewHolder> {
+
+
+    interface OnItemClickHandler{
+        void onItemClick(String text);
+    }
+
     private LinkedList<String> mWordList;
     private LayoutInflater mInflater;
-
     private String SelectedFileName = null;
+    private OnItemClickHandler onItemClickHandler;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder
                                         implements View.OnClickListener{
@@ -38,12 +45,15 @@ public class ListRecordAdapter extends RecyclerView.Adapter<ListRecordAdapter.My
             // TODO: file choosed action
             SelectedFileName = mWordList.get(mPosition);
             mListRecordAdapter.notifyDataSetChanged();
+            onItemClickHandler.onItemClick(SelectedFileName);
         }
+
     }
 
-    public ListRecordAdapter(Context context, LinkedList<String> mWordList) {
+    public ListRecordAdapter(Context context, LinkedList<String> mWordList, OnItemClickHandler handler) {
         mInflater = LayoutInflater.from(context);
         this.mWordList = mWordList;
+        onItemClickHandler = handler;
     }
 
     @NonNull
