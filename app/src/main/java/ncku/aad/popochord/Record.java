@@ -2,6 +2,7 @@ package ncku.aad.popochord;
 
 import android.Manifest;
 import android.content.Intent;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
@@ -176,6 +177,7 @@ public class Record extends AppCompatActivity {
                     mediaRecorder.release();
                     mediaRecorder = null;
                     recordButn.setEnabled(true);
+                    stopButn.setEnabled(false);
                     fnameText.setEnabled(true);
                     stattextView.setText("");
                     Toast.makeText(Record.this, fnameText.getText().toString()+" saved", Toast.LENGTH_SHORT);
@@ -206,6 +208,25 @@ public class Record extends AppCompatActivity {
 
     public void timerstop() {
         handler.removeCallbacks(updateTimerThread);
+    }
+
+    public void onMark(View view) {
+        showToast(Record.this, stattextView.getText().toString()+" marked", 800);
+    }
+
+    public static void showToast(final Activity activity, final String word, final long time){
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                final Toast toast = Toast.makeText(activity, word, Toast.LENGTH_LONG);
+                toast.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, time);
+            }
+        });
     }
 
 }
