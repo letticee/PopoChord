@@ -48,7 +48,7 @@
             tools:layout_editor_absoluteY="398dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="2dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Marker" />
@@ -56,19 +56,19 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="KEY" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="TONAL" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="BASS" />
         </LinearLayout>
 
@@ -86,44 +86,47 @@
 
             <TextView
                 android:id="@+id/chord_marker"
-                android:layout_width="0dp"
+                android:layout_width="2dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center"/>
 
             <Spinner
                 android:id="@+id/Key"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></Spinner>
+                android:layout_weight="2"></Spinner>
 
             <Spinner
                 android:id="@+id/Toanl"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></Spinner>
+                android:layout_weight="3"></Spinner>
 
             <Spinner
                 android:id="@+id/Bass"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></Spinner>
+                android:layout_weight="2"></Spinner>
         </LinearLayout>
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="395dp"
-        android:layout_height="517dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
+        android:foregroundGravity="left"
+        app:layout_constraintBottom_toTopOf="@+id/previous_chord"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        android:foregroundGravity="left"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
     <Button

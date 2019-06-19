@@ -35,7 +35,17 @@ public class ChordProgression extends AppCompatActivity
                 return true;
             case R.id.delete:
                 chord_list.remove(current_chord);
+                if(current_chord==0) {
+                    refreshPrevNext("", chord_list.get(current_chord), "");
+                }
+                else if(current_chord==chord_list.size()-1) {
+                    refreshPrevNext(chord_list.get(current_chord-1), chord_list.get(current_chord), "");
+                }
+                else{
+                    refreshPrevNext(chord_list.get(current_chord-1), chord_list.get(current_chord), chord_list.get(current_chord+1));
+                }
                 return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -245,7 +255,7 @@ public class ChordProgression extends AppCompatActivity
     private void refreshPrevNext(String p, String n, String t){
         if(p!=null && t!=null) {
             previous_textview.setText("<-" + p);
-            current_textview.setText("      |       " + n + "       |       ");
+            current_textview.setText("   |" + n +"|    ");
             next_textview.setText(t + "->");
         }
     }
