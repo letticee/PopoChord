@@ -1,8 +1,6 @@
 package ncku.aad.popochord;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,14 +10,11 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
-public class ListRecordAdapter extends RecyclerView.Adapter<ListRecordAdapter.MyViewHolder> {
+public class ListChordAdapter extends RecyclerView.Adapter<ListChordAdapter.MyViewHolder> {
 
-
-    public ListRecordAdapter(ChordProgression context, LinkedList<String> chordList, ChordProgression chordProgression) {
-    }
 
     interface OnItemClickHandler{
-        void onItemClick(String text);
+        void onItemClick(String text, int pos);
     }
 
     private LinkedList<String> mWordList;
@@ -32,11 +27,11 @@ public class ListRecordAdapter extends RecyclerView.Adapter<ListRecordAdapter.My
                                         implements View.OnClickListener{
         // each data item is just a string in this case
         public TextView textView;
-        final ListRecordAdapter mListRecordAdapter;
-        public MyViewHolder(View v, ListRecordAdapter mListRecordAdapter) {
+        final ListChordAdapter mListChordAdapter;
+        public MyViewHolder(View v, ListChordAdapter mListChordAdapter) {
             super(v);
             textView = v.findViewById(R.id.word);
-            this.mListRecordAdapter = mListRecordAdapter;
+            this.mListChordAdapter = mListChordAdapter;
             v.setOnClickListener(this);
         }
 
@@ -47,13 +42,13 @@ public class ListRecordAdapter extends RecyclerView.Adapter<ListRecordAdapter.My
 
             // TODO: file choosed action
             SelectedFileName = mWordList.get(mPosition);
-            mListRecordAdapter.notifyDataSetChanged();
-            onItemClickHandler.onItemClick(SelectedFileName);
+            mListChordAdapter.notifyDataSetChanged();
+            onItemClickHandler.onItemClick(SelectedFileName, mPosition);
         }
 
     }
 
-    public ListRecordAdapter(Context context, LinkedList<String> mWordList, OnItemClickHandler handler) {
+    public ListChordAdapter(Context context, LinkedList<String> mWordList, OnItemClickHandler handler) {
         mInflater = LayoutInflater.from(context);
         this.mWordList = mWordList;
         onItemClickHandler = handler;
@@ -62,7 +57,7 @@ public class ListRecordAdapter extends RecyclerView.Adapter<ListRecordAdapter.My
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View mViewItem = mInflater.inflate(R.layout.wordlist_item, parent, false);
+        View mViewItem = mInflater.inflate(R.layout.chordlist_item, parent, false);
         return new MyViewHolder(mViewItem, this);
     }
 

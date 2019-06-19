@@ -10,13 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private String FileName;
+    private String FileName = null;
     private TextView showFile;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+    private View view;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -50,5 +46,19 @@ public class MainActivity extends AppCompatActivity {
         Intent settingsIntent = new Intent( this,
                                             ListRecord.class);
         startActivityForResult(settingsIntent, 0);
+    }
+
+    public void onChord(View view) {
+        if(FileName == null)
+            Toast.makeText(this, "No File Selected", Toast.LENGTH_SHORT).show();
+        else{
+            Intent settingsIntent = new Intent(this,
+                    ChordProgression.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("showFile", FileName);
+            settingsIntent.putExtras(bundle);
+            startActivityForResult(settingsIntent, 0);
+        }
+
     }
 }
